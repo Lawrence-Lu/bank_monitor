@@ -483,19 +483,30 @@ export default {
     handleNodeClick(data, node) {
       console.log(data.label)
       console.log(data.id)
-      this.ruleForm.id=data.id
+      this.ruleForm.id=data.id  
       this.ruleForm.label=data.label
       this.ruleForm.ip=data.value
     },
      // 查询按钮
     submitForm(){
-      alert("Submit!")
-      
-      // 实际运作时改成 axios.post
-      console.log(this.ruleForm); //包括时间（stamp),ip,label-KPI
       const _this=this;
+      
+      
+      // 实际运作时改成 axios.post，不需要axios.get了
+      console.log(this.ruleForm); //包括时间（stamp),ip,label-KPI
 
-    // 更换为后台URL，获取图形数据，
+      /* axios.post("",this.ruleForm).then(function(resp){
+        console.log(resp)
+        if(resp.data.message=='success'){
+          _this.$message('添加成功')
+          _this.lineOption.series.data=resp.data.KPI
+          _this.lineOption.xAxis.data=resp.data.date
+        }
+      })
+      */
+      
+    
+    // 此处get请求只是模拟的，真实操作时，应该一个axios.post就足够了
       axios.get("../../static/line.json").then(function (resp){
       console.log(resp);
       _this.lineOption.series.data=resp.data.KPI;
