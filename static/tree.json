@@ -1,0 +1,199 @@
+{"treeSelectorData": [
+    {
+      "id": 1,
+      "label": "CN-A06支付中心",
+      "children": [
+        {
+          "id": 11,
+          "label": "10.24.198.115",
+          "children": [
+            {
+              "id": 111,
+              "label": "cpu",
+              "children": [
+                {
+                  "id": 1111,
+                  "label": "cpu_used_total",
+                  "value": "10.24.198.115"
+                },
+                {
+                  "id": 1112,
+                  "label": "cpu_user_used",
+                  "value": "10.24.198.115"
+                },
+                {"id": 1113, "label": "cpu_system_used" ,"value": "10.24.198.115"},
+                { "id": 1114, "label": "cpu_average_5min" ,"value": "10.24.198.115"},
+                { "id": 1115, "label": "cpu_io_wait","value": "10.24.198.115" }
+              ]
+            },
+            {
+              "id": 112,
+              "label": "network",
+              "children": [
+                {
+                  "id": 1121,
+                  "label": "tcp_activeopens",
+                  "value": "10.24.198.115"
+                },
+                { "id": 1122, "label": "tcp_passiveopens","value": "10.24.198.115" },
+                { "id": 1123, "label": "close_wait_count","value": "10.24.198.115" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "label": "10.24.198.116",
+          "children": [
+            {
+              "id": 121,
+              "label": "cpu",
+              "children": [
+                {
+                  "id": 1211,
+                  "label": "cpu_used_total",
+                  "value": "10.24.198.116"
+                },
+                {
+                  "id": 1212,
+                  "label": "cpu_user_used",
+                  "value": "10.24.198.116"
+                },
+                {
+                  "id": 1213,
+                  "label": "cpu_system_used",
+                  "value": "10.24.198.116"
+                }
+              ]
+            },
+            {
+              "id": 122,
+              "label": "network",
+              "children": [
+                {
+                  "id": 1221,
+                  "label": "tcp_activeopens",
+                  "value": "10.24.198.116"
+                },
+                {
+                  "id": 1222,
+                  "label": "tcp_passiveopens",
+                  "value": "10.24.198.116"
+                },
+                {
+                  "id": 1223,
+                  "label": "close_wait_count",
+                  "value": "10.24.198.116"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+        "id": 2,
+        "label": "CN-A11离线计算",
+        "children": [
+          {
+            "id": 21,
+            "label": "10.24.166.215",
+            "children": [
+              {
+                "id": 211,
+                "label": "cpu",
+                "children": [
+                  {
+                    "id": 2111,
+                    "label": "cpu_used_total",
+                    "value": "10.24.166.215"
+                  },
+                  {
+                    "id": 2112,
+                    "label": "cpu_user_used",
+                    "value": "10.24.166.215"
+                  },
+                  {
+                    "id": 2113,
+                    "label": "cpu_system_used",
+                    "value": "10.24.166.215"
+                  }
+                  
+                ]
+              },
+              {
+                "id": 212,
+                "label": "network",
+                "children": [
+                  {
+                    "id": 2121,
+                    "label": "tcp_activeopens",
+                    "value": "10.24.166.215"
+                  },
+                  {
+                    "id": 2122,
+                    "label": "tcp_passiveopens",
+                    "value": "10.24.166.215"
+                  },
+                  {
+                    "id": 2123,
+                    "label": "close_wait_count",
+                    "value": "10.24.166.215"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 22,
+            "label": "10.24.198.116",
+            "children": [
+              {
+                "id": 221,
+                "label": "cpu",
+                "children": [
+                  {
+                    "id": 2211,
+                    "label": "cpu_used_total",
+                    "value": "10.24.198.116"
+                  },
+                  {
+                    "id": 2212,
+                    "label": "cpu_user_used"
+                  },
+                  {
+                    "id": 2213,
+                    "label": "cpu_system_used",
+                    "value": "10.24.198.116"
+                  }
+                ]
+              },
+              {
+                "id": 222,
+                "label": "network",
+                "children": [
+                  {
+                    "id": 2221,
+                    "label": "tcp_activeopens",
+                    "value": "10.24.198.116"
+                  },
+                  {
+                    "id": 2222,
+                    "label": "tcp_passiveopens",
+                    "value": "10.24.198.116"
+                  },
+                  {
+                    "id": 2223,
+                    "label": "close_wait_count",
+                    "value": "10.24.198.116"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    
+    
+  ]
+}
