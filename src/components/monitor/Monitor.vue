@@ -8,41 +8,33 @@
     </el-breadcrumb>
 
     <el-card>
-      <!-- tree形树-->
-      <div class="tree">
-      <!--将data暂时定为treeSelectorData2作为测试-->
-        <el-tree
-          :data="treeSelectorData2"  
-          
-          node-key="id"
-          :default-expanded-keys="[1, 11, 111,112]"
-          show-checkbox
-          highlight-current
-          check-on-click-node
-          :props="defaultProps"
-          ref="treeForm"
-          check-strictly
-          @check-change="handleCheckChange"
-          @node-click="handleNodeClick"
-        ></el-tree>
-      </div>
-        
-        <!--时间选择控件-->
-      <div>
-      <span class="demonstration">时间段</span>
-        <el-date-picker
+      <div id="timeSelector" class="block">
+      <el-select v-model="ruleForm.ip" placeholder="请选择一个设备">
+       <el-option
+        v-for="item in ipOption"
+        :key="item"
+        :label="item"
+        :value="item">
+        </el-option>
+    </el-select>
+      
+      
+    <el-date-picker
         v-model="ruleForm.date"
         value-format="timestamp"
         type="datetimerange"
         range-separator="至"
         start-placeholder="开始日期"
         end-placeholder="结束日期">
-      </el-date-picker>
-      <el-button type="primary" @click="submitForm()">查询</el-button>
-      </div>
+    </el-date-picker>
+       
+    <el-button type="primary" @click="submitForm()">查询</el-button>
+  </div>
 
       <!-- 图片显示区域 -->
-      <div id="linechart" style="height:400px;width:600px"></div>
+    <div id="linechart" style="height:400px;width:600px"></div>
+    <div id="linechart2" style="height:400px;width:600px"></div>
+    <div id="linechart3" style="height:400px;width:1100px"></div>
       
       
       
@@ -60,341 +52,59 @@ export default {
   data() {
     return {
       ruleForm: {
-        id:'',
         date: '',
-        label:'',
-        ip:''
-      },
-      checkedId: "",
-      filterText: "",
-      treeSelectorData: [
-        {
-          id: 1,
-          label: "CN-A06支付中心",
-          children: [
-            {
-              id: 11,
-              label: "10.24.198.115",
-              children: [
-                {
-                  id: 111,
-                  label: "cpu",
-                  children: [
-                    {
-                      id: 1111,
-                      label: "cpu_used_total"
-                    },
-                    {
-                      id: 1112,
-                      label: "cpu_user_used"
-                    },
-                    { id: 1113, label: "cpu_system_used" },
-                    { id: 1114, label: "cpu_average_5min" },
-                    { id: 1115, label: "cpu_io_wait" }
-                  ]
-                },
-                {
-                  id: 112,
-                  label: "network",
-                  children: [
-                    {
-                      id: 1121,
-                      label: "tcp_activeopens"
-                    },
-                    { id: 1122, label: "tcp_passiveopens" },
-                    { id: 1123, label: "close_wait_count" }
-                  ]
-                }
-              ]
-            },
-            {
-              id: 12,
-              label: "10.24.198.116",
-              children: [
-                {
-                  id: 121,
-                  label: "cpu",
-                  children: [
-                    {
-                      id: 1211,
-                      label: "cpu_used_total"
-                    },
-                    {
-                      id: 1212,
-                      label: "cpu_user_used"
-                    },
-                    {
-                      id: 1213,
-                      label: "cpu_system_used"
-                    },
-                    {
-                      id: 1214,
-                      label: "cpu_average_5min"
-                    },
-                    {
-                      id: 1215,
-                      label: "cpu_io_wait"
-                    }
-                  ]
-                },
-                {
-                  id: 122,
-                  label: "network",
-                  children: [
-                    {
-                      id: 1221,
-                      label: "tcp_activeopens"
-                    },
-                    {
-                      id: 1222,
-                      label: "tcp_passiveopens"
-                    },
-                    {
-                      id: 1223,
-                      label: "close_wait_count"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          id: 2,
-          label: "CN-A11离线计算",
-          children: [
-            {
-              id: 21,
-              label: "10.24.166.215",
-              children: [
-                {
-                  id: 211,
-                  label: "cpu",
-                  children: [
-                    {
-                      id: 2111,
-                      label: "cpu_used_total"
-                    },
-                    {
-                      id: 2112,
-                      label: "cpu_user_used"
-                    },
-                    {
-                      id: 2113,
-                      label: "cpu_system_used"
-                    },
-                    {
-                      id: 2114,
-                      label: "cpu_average_5min"
-                    },
-                    {
-                      id: 2115,
-                      label: "cpu_io_wait"
-                    }
-                  ]
-                },
-                {
-                  id: 212,
-                  label: "network",
-                  children: [
-                    {
-                      id: 2121,
-                      label: "tcp_activeopens"
-                    },
-                    {
-                      id: 2122,
-                      label: "tcp_passiveopens"
-                    },
-                    {
-                      id: 2123,
-                      label: "close_wait_count"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: 22,
-              label: "10.24.198.116",
-              children: [
-                {
-                  id: 221,
-                  label: "cpu",
-                  children: [
-                    {
-                      id: 2211,
-                      label: "cpu_used_total"
-                    },
-                    {
-                      id: 2212,
-                      label: "cpu_user_used"
-                    },
-                    {
-                      id: 2213,
-                      label: "cpu_system_used"
-                    },
-                    {
-                      id: 2214,
-                      label: "cpu_average_5min"
-                    },
-                    {
-                      id: 2215,
-                      label: "cpu_io_wait"
-                    }
-                  ]
-                },
-                {
-                  id: 222,
-                  label: "network",
-                  children: [
-                    {
-                      id: 2221,
-                      label: "tcp_activeopens"
-                    },
-                    {
-                      id: 2222,
-                      label: "tcp_passiveopens"
-                    },
-                    {
-                      id: 2223,
-                      label: "close_wait_count"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          id: 3,
-          label: "CN-B03中台商品中心",
-          children: [
-            {
-              id: 31,
-              label: "10.24.146.134",
-              children: [
-                {
-                  id: 311,
-                  label: "cpu",
-                  children: [
-                    {
-                      id: 3111,
-                      label: "cpu_used_total"
-                    },
-                    {
-                      id: 3112,
-                      label: "cpu_user_used"
-                    },
-                    {
-                      id: 3113,
-                      label: "cpu_system_used"
-                    },
-                    {
-                      id: 3114,
-                      label: "cpu_average_5min"
-                    },
-                    {
-                      id: 3115,
-                      label: "cpu_io_wait"
-                    }
-                  ]
-                },
-                {
-                  id: 312,
-                  label: "network",
-                  children: [
-                    {
-                      id: 3121,
-                      label: "tcp_activeopens"
-                    },
-                    {
-                      id: 3122,
-                      label: "tcp_passiveopens"
-                    },
-                    {
-                      id: 3123,
-                      label: "close_wait_count"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: 32,
-              label: "10.24.198.116",
-              children: [
-                {
-                  id: 321,
-                  label: "cpu",
-                  children: [
-                    {
-                      id: 3211,
-                      label: "cpu_used_total"
-                    },
-                    {
-                      id: 3212,
-                      label: "cpu_user_used"
-                    },
-                    {
-                      id: 3213,
-                      label: "cpu_system_used"
-                    },
-                    {
-                      id: 3214,
-                      label: "cpu_average_5min"
-                    },
-                    {
-                      id: 3215,
-                      label: "cpu_io_wait"
-                    }
-                  ]
-                },
-                {
-                  id: 322,
-                  label: "network",
-                  children: [
-                    {
-                      id: 3221,
-                      label: "tcp_activeopens"
-                    },
-                    {
-                      id: 3222,
-                      label: "tcp_passiveopens"
-                    },
-                    {
-                      id: 3223,
-                      label: "close_wait_count"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      treeSelectorData2:''
-      ,
-      defaultProps: {
-        children: "children",
-        label: "label"
+         ip:''
       },
 
+      ipOption: ''
+
+      ,
+      
+      // checkedId: "",
+      // filterText: "",
+      
+      
+      
+      // defaultProps: {
+      //   children: "children",
+      //   label: "label"
+      // },
+
     lineChart:'',
+    lineChart2:'',
+    lineChart3:'',
       // KPI图形
       lineOption:{
         title: {
-            text: 'KPI Performance'
+            text: 'CPU'
         },
         tooltip: {
             trigger: 'axis'
+            
         },
+        legend: {
+                    data: ['CPU_used_total', 'CPU_used_user','CPU_used_system'],
+                    bottom: '3%',
+                    
+                },
+         
         xAxis: {
-            data: ''
+            type: 'category',
+             boundaryGap: false,
+              data: ["2020-01-22 00:00",
+        "2020-01-22 01:00",
+        "2020-01-22 02:00",
+        "2020-01-22 03:00",
+        "2020-01-22 04:00",
+        "2020-01-22 05:00",
+        "2020-01-22 06:00",
+        "2020-01-22 07:00",
+        "2020-01-22 08:00",
+        "2020-01-22 09:00",
+        "2020-01-22 10:00",]
         },
         yAxis: {
-            splitLine: {
-                show: false
-            }
+            type :'value'
         },
         toolbox: {
             left: 'center',
@@ -406,133 +116,387 @@ export default {
                 saveAsImage: {}
             }
         },
-        dataZoom: [{
-          startValue: '2020-01-22 00:00'
-        },
-            {
-            type: 'inside'
-        }],
-        visualMap: {
-            top: 10,
-            right: 10,
-            pieces: [{
-                gt: 0,
-                lte: 50,
-                color: '#096'
-            }, {
-                gt: 50,
-                lte: 100,
-                color: '#ffde33'
-            }, {
-                gt: 100,
-                lte: 150,
-                color: '#ff9933'
-            }, {
-                gt: 150,
-                lte: 200,
-                color: '#cc0033'
-            }, {
-                gt: 200,
-                lte: 300,
-                color: '#660099'
-            }, {
-                gt: 300,
-                color: '#7e0023'
-            }],
-            outOfRange: {
-                color: '#999'
-            }
-        },
-        series: {
-            name: 'KPI',
+       
+        series: [
+          {
+            name: 'CPU_used_total',
             type: 'line',
-            data: '',
-            markLine: {
-                silent: true,
-                data: [{
-                    yAxis: 50
+            smooth: true,
+            symbol: 'none',
+            sampling: 'average',
+            itemStyle: {
+                color: 'rgb(255, 70, 131)'
+            },
+            areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: 'rgb(255, 158, 68)'
                 }, {
-                    yAxis: 100
+                    offset: 1,
+                    color: 'rgb(255, 70, 131)'
+                }])
+            },
+            data: [30,40,50,45,66,60,53,47,50,52,60]
+        },
+        {
+            name: 'CPU_used_user',
+            type: 'line',
+            smooth: true,
+            symbol: 'none',
+            sampling: 'average',
+            itemStyle: {
+                color: 'rgb(226, 40, 131)'
+            },
+            areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: 'rgb(255, 158, 68)'
                 }, {
-                    yAxis: 150
+                    offset: 1,
+                    color: 'rgb(255, 70, 131)'
+                }])
+            },
+            data: [25,34,44,39,60,50,45,40,38,40,52]
+        },
+        {
+            name: 'CPU_used_system',
+            type: 'line',
+            smooth: true,
+            symbol: 'none',
+            sampling: 'average',
+            itemStyle: {
+                color: 'rgb(210, 38, 226)'
+            },
+            areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: 'rgb(255, 158, 68)'
                 }, {
-                    yAxis: 200
-                }, {
-                    yAxis: 300
-                }]
-            }
+                    offset: 1,
+                    color: 'rgb(255, 70, 131)'
+                }])
+            },
+            data: [10,12,14,11,9,12,8,7,12,10,14]
         }
+
+        ]
+           
+        
+        
     },
+
+     lineOption2:{
+        title: {
+            text: 'Memory'
+        },
+        tooltip: {
+            trigger: 'axis'
+            
+        },
+        legend: {
+                    data: ['mem_usage_rate', 'swap_usage_rate','available_memory'],
+                    bottom: '3%',
+                    
+                },
+         
+        xAxis: {
+            type: 'category',
+             boundaryGap: false,
+              data: ["2020-01-22 00:00",
+        "2020-01-22 01:00",
+        "2020-01-22 02:00",
+        "2020-01-22 03:00",
+        "2020-01-22 04:00",
+        "2020-01-22 05:00",
+        "2020-01-22 06:00",
+        "2020-01-22 07:00",
+        "2020-01-22 08:00",
+        "2020-01-22 09:00",
+        "2020-01-22 10:00",]
+        },
+        yAxis: {
+            type :'value'
+        },
+        toolbox: {
+            left: 'center',
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+       
+        series: [
+          {
+            name: 'mem_usage_rate',
+            type: 'line',
+            smooth: true,
+            symbol: 'none',
+            sampling: 'average',
+            itemStyle: {
+                color: 'rgb(38, 166, 226)'
+            },
+            areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: 'rgb(14, 98, 194)'
+                }, {
+                    offset: 1,
+                    color: 'rgb(38, 166, 226)'
+                }])
+            },
+            data: [30,40,50,45,66,60,53,47,50,52,60]
+        },
+        {
+            name: 'swap_usage_rate',
+            type: 'line',
+            smooth: true,
+            symbol: 'none',
+            sampling: 'average',
+            itemStyle: {
+                color: 'rgb(26, 133, 210)'
+            },
+            areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: 'rgb(14, 98, 194)'
+                }, {
+                    offset: 1,
+                    color: 'rgb(38, 166, 226)'
+                }])
+            },
+            data: [25,34,44,39,60,50,45,40,38,40,52]
+        },
+        {
+            name: 'available_memory',
+            type: 'line',
+            smooth: true,
+            symbol: 'none',
+            sampling: 'average',
+            itemStyle: {
+                color: 'rgb(14, 98, 194)'
+            },
+            areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: 'rgb(14, 98, 194)'
+                }, {
+                    offset: 1,
+                    color: 'rgb(38, 166, 226)'
+                }])
+            },
+            data: [10,12,14,11,9,12,8,7,12,10,14]
+        }
+
+        ]
+           
+    },
+
+
+    lineOption3:{
+        title: {
+            text: 'IO'
+        },
+        tooltip: {
+            trigger: 'axis'
+            
+        },
+        legend: {
+                    data: ['dev_io_read_rate', 'dev_io_write_rate','dev_io_usage_rate'],
+                    bottom: '3%',
+                    
+                },
+         
+        xAxis: {
+            type: 'category',
+             boundaryGap: false,
+              data: ["2020-01-22 00:00",
+        "2020-01-22 01:00",
+        "2020-01-22 02:00",
+        "2020-01-22 03:00",
+        "2020-01-22 04:00",
+        "2020-01-22 05:00",
+        "2020-01-22 06:00",
+        "2020-01-22 07:00",
+        "2020-01-22 08:00",
+        "2020-01-22 09:00",
+        "2020-01-22 10:00",]
+        },
+        yAxis: {
+            type :'value'
+        },
+        toolbox: {
+            left: 'center',
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+       
+        series: [
+          
+          {
+            name: 'dev_io_read_rate',
+            type: 'line',
+            smooth: true,
+            symbol: 'none',
+            sampling: 'average',
+            itemStyle: {
+                color: 'rgb(138, 197, 156)'
+            },
+            areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: 'rgb(67, 202, 85)'
+                }, {
+                    offset: 1,
+                    color: 'rgb(138, 197, 156)'
+                }])
+            },
+            data: [30,40,50,45,66,60,53,47,50,52,60]
+        },
+        {
+            name: 'dev_io_write_rate',
+            type: 'line',
+            smooth: true,
+            symbol: 'none',
+            sampling: 'average',
+            itemStyle: {
+                color: 'rgb(100, 202, 85)'
+            },
+            areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: 'rgb(67, 202, 85)'
+                }, {
+                    offset: 1,
+                    color: 'rgb(138, 197, 156)'
+                }])
+            },
+            data: [25,34,44,39,60,50,45,40,38,40,52]
+        },
+        {
+            name: 'dev_io_usage_rate',
+            type: 'line',
+            smooth: true,
+            symbol: 'none',
+            sampling: 'average',
+            itemStyle: {
+                color: 'rgb(67, 202, 85)'
+            },
+            areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: 'rgb(67, 202, 85)'
+                }, {
+                    offset: 1,
+                    color: 'rgb(138, 197, 156)'
+                }])
+            },
+            data: [10,12,14,11,9,12,8,7,12,10,14]
+        }
+
+        ]
+           
+      },
+    
+    
     
     };
   },
 
   methods: {
-    // 设定复选框只能单选
-    handleCheckChange(data, checked, node) {
-      if (checked === true) {
-        this.checkedId = data.id;
-        this.$refs.treeForm.setCheckedKeys([data.id]);
-      } else {
-        if (this.checkedId == data.id) {
-          this.$refs.treeForm.setCheckedKeys([data.id]);
-        }
-      }
-    },
-    //单击时的操作
-    handleNodeClick(data, node) {
-      console.log(data.label)
-      console.log(data.id)
-      this.ruleForm.id=data.id  
-      this.ruleForm.label=data.label
-      this.ruleForm.ip=data.value
-    },
+   
      // 查询按钮
     submitForm(){
       const _this=this;
       
       
-      // 实际运作时改成 axios.post，不需要axios.get了
+      // 实际运作时改成 axios.post，数据形式参考line.json
       console.log(this.ruleForm); //包括时间（stamp),ip,label-KPI
-
+      console.log(this.lineOption3.series[0].data) //测试用
       /* axios.post("",this.ruleForm).then(function(resp){
         console.log(resp)
         if(resp.data.message=='success'){
           _this.$message('添加成功')
-          _this.lineOption.series.data=resp.data.KPI
           _this.lineOption.xAxis.data=resp.data.date
+           _this.lineOption2.xAxis.data=resp.data.date
+           _this.lineOption3.xAxis.data=resp.data.date
+      
+      
+
+        _this.lineOption.series[0].data=resp.data.CPU_used_total
+        _this.lineOption.series[1].data=resp.data.CPU_used_user
+        _this.lineOption.series[2].data=resp.data.CPU_used_system
+
+        _this.lineOption2.series[0].data=resp.data.dev_io_read_rate
+        _this.lineOption2.series[1].data=resp.data.dev_io_write_rate
+        _this.lineOption2.series[2].data=resp.data.dev_io_usage_rate
+
+        _this.lineOption3.series[0].data=resp.data.mem_usage_rate
+        _this.lineOption3.series[1].data=resp.data.swap_usage_rate
+        _this.lineOption3.series[2].data=resp.data.available_memory
         }
-      })
+         })
       */
       
     
-    // 此处get请求只是模拟的，真实操作时，应该一个axios.post就足够了
+   // 此处get请求只是模拟的，真实操作时，使用post请求
       axios.get("../../static/line.json").then(function (resp){
-      console.log(resp);
-      _this.lineOption.series.data=resp.data.KPI;
-      _this.lineOption.xAxis.data=resp.data.date;})
-      console.log(_this.lineOption)
+     
+     // 时间部分赋值
+      _this.lineOption.xAxis.data=resp.data.date
+      _this.lineOption2.xAxis.data=resp.data.date
+      _this.lineOption3.xAxis.data=resp.data.date
+      
+      
+     // 数据部分
+      _this.lineOption.series[0].data=resp.data.CPU_used_total
+      _this.lineOption.series[1].data=resp.data.CPU_used_user
+      _this.lineOption.series[2].data=resp.data.CPU_used_system
+
+      _this.lineOption2.series[0].data=resp.data.dev_io_read_rate
+      _this.lineOption2.series[1].data=resp.data.dev_io_write_rate
+      _this.lineOption2.series[2].data=resp.data.dev_io_usage_rate
+
+      _this.lineOption3.series[0].data=resp.data.mem_usage_rate
+      _this.lineOption3.series[1].data=resp.data.swap_usage_rate
+      _this.lineOption3.series[2].data=resp.data.available_memory
+
+
+
+      ;})
+      
       
       // 画图setOption
         this.lineChart.setOption(_this.lineOption)
+        this.lineChart2.setOption(_this.lineOption2)
+         this.lineChart3.setOption(_this.lineOption3)
       },
 
    
   },
 
-  // 导入树形控件数据 ：问题：暂时假定的返回是一个完整树形的data-见tree.json。而不是label+ip。
+  
   
   created() {
     const _this=this;
     // 真正应用时改成URL 注意：希望后台可以生成类似tree.json格式的数据
-    axios.get("../../static/tree.json").then(function (resp){
-             _this.treeSelectorData2=resp.data.treeSelectorData;
+    axios.get("../../static/ipList.json").then(function (resp){
+             _this.ipOption=resp.data.ips;
              
          })
   },
   mounted() {
     // 初始化折线图
     this.lineChart = echarts.init(document.getElementById("linechart"));
+    this.lineChart2 = echarts.init(document.getElementById("linechart2"))
+    this.lineChart3 = echarts.init(document.getElementById("linechart3"))
   }   
 }
 </script>
@@ -552,13 +516,22 @@ export default {
 .tree {
   width: 25%;
   height: 100%;
-  background-color: aqua;
+  background-color: rgb(107, 218, 122);
   float: left;
 }
 #main {
   float: left;
 }
+#timeSelector {
+  float: right;
+}
 #linechart {
+  float: left;
+}
+#linechart2 {
+  float: right;
+}
+#linechart3 {
   float: left;
 }
 
