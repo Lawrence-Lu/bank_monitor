@@ -8,8 +8,11 @@
     </el-breadcrumb>
 
     <el-card>
-      <div id="timeSelector" class="block">
-      <el-select v-model="ruleForm.ip" placeholder="请选择一个设备">
+      <div id="Selectors" class="block">
+      <el-select 
+      @change="ipChange"
+      v-model="ruleForm.ip" 
+      placeholder="请选择一个设备">
        <el-option
         v-for="item in ipOption"
         :key="item"
@@ -73,6 +76,7 @@ export default {
     lineChart:'',
     lineChart2:'',
     lineChart3:'',
+    interval1:'',
       // KPI图形
       lineOption:{
         title: {
@@ -91,21 +95,25 @@ export default {
         xAxis: {
             type: 'category',
              boundaryGap: false,
-              data: ["2020-01-22 00:00",
-        "2020-01-22 01:00",
-        "2020-01-22 02:00",
-        "2020-01-22 03:00",
-        "2020-01-22 04:00",
-        "2020-01-22 05:00",
-        "2020-01-22 06:00",
-        "2020-01-22 07:00",
-        "2020-01-22 08:00",
-        "2020-01-22 09:00",
-        "2020-01-22 10:00",]
+              data: (function (){
+                var now = new Date();
+                var res = [];
+                var len = 20;
+                while (len--) {
+                    res.unshift(now.toLocaleTimeString().replace(/^\D*/,''));
+                    now = new Date(now - 2000);
+                }
+                return res;
+            })()
         },
-        yAxis: {
-            type :'value'
-        },
+        yAxis: [
+            {type :'value',
+            name: 'rate: %',
+             max : 100,
+             min :0
+            }
+            
+        ],
         toolbox: {
             left: 'center',
             feature: {
@@ -136,7 +144,15 @@ export default {
                     color: 'rgb(255, 70, 131)'
                 }])
             },
-            data: [30,40,50,45,66,60,53,47,50,52,60]
+            data: (function (){
+                var res = [];
+                var len = 0;
+                while (len < 20) {
+                    res.push((Math.random(1)*55 + 40).toFixed(1) - 0);
+                    len++;
+                }
+                return res;
+            })()
         },
         {
             name: 'CPU_used_user',
@@ -156,7 +172,15 @@ export default {
                     color: 'rgb(255, 70, 131)'
                 }])
             },
-            data: [25,34,44,39,60,50,45,40,38,40,52]
+            data: (function (){
+                var res = [];
+                var len = 0;
+                while (len < 20) {
+                    res.push((Math.random(2)*40 + 5).toFixed(1) - 0);
+                    len++;
+                }
+                return res;
+            })()
         },
         {
             name: 'CPU_used_system',
@@ -176,7 +200,15 @@ export default {
                     color: 'rgb(255, 70, 131)'
                 }])
             },
-            data: [10,12,14,11,9,12,8,7,12,10,14]
+            data: (function (){
+                var res = [];
+                var len = 0;
+                while (len < 20) {
+                    res.push((Math.random(3)*40 + 4).toFixed(1) - 0);
+                    len++;
+                }
+                return res;
+            })()
         }
 
         ]
@@ -202,21 +234,24 @@ export default {
         xAxis: {
             type: 'category',
              boundaryGap: false,
-              data: ["2020-01-22 00:00",
-        "2020-01-22 01:00",
-        "2020-01-22 02:00",
-        "2020-01-22 03:00",
-        "2020-01-22 04:00",
-        "2020-01-22 05:00",
-        "2020-01-22 06:00",
-        "2020-01-22 07:00",
-        "2020-01-22 08:00",
-        "2020-01-22 09:00",
-        "2020-01-22 10:00",]
+              data: (function (){
+                var now = new Date();
+                var res = [];
+                var len = 20;
+                while (len--) {
+                    res.unshift(now.toLocaleTimeString().replace(/^\D*/,''));
+                    now = new Date(now - 2000);
+                }
+                return res;
+            })()
         },
-        yAxis: {
-            type :'value'
-        },
+        yAxis: [
+            {type :'value',
+             name: 'rate: %',
+             min : 0,
+             max : 100
+            }
+        ],
         toolbox: {
             left: 'center',
             feature: {
@@ -247,7 +282,15 @@ export default {
                     color: 'rgb(38, 166, 226)'
                 }])
             },
-            data: [30,40,50,45,66,60,53,47,50,52,60]
+            data: (function (){
+                var res = [];
+                var len = 0;
+                while (len < 20) {
+                    res.push((Math.random(4)*55 + 40).toFixed(1) - 0);
+                    len++;
+                }
+                return res;
+            })()
         },
         {
             name: 'swap_usage_rate',
@@ -267,7 +310,15 @@ export default {
                     color: 'rgb(38, 166, 226)'
                 }])
             },
-            data: [25,34,44,39,60,50,45,40,38,40,52]
+            data: (function (){
+                var res = [];
+                var len = 0;
+                while (len < 20) {
+                    res.push((Math.random(5)*40 + 4).toFixed(1) - 0);
+                    len++;
+                }
+                return res;
+            })()
         },
         {
             name: 'available_memory',
@@ -287,7 +338,15 @@ export default {
                     color: 'rgb(38, 166, 226)'
                 }])
             },
-            data: [10,12,14,11,9,12,8,7,12,10,14]
+            data: (function (){
+                var res = [];
+                var len = 0;
+                while (len < 20) {
+                    res.push((Math.random(6)*40 + 5).toFixed(1) - 0);
+                    len++;
+                }
+                return res;
+            })()
         }
 
         ]
@@ -312,21 +371,23 @@ export default {
         xAxis: {
             type: 'category',
              boundaryGap: false,
-              data: ["2020-01-22 00:00",
-        "2020-01-22 01:00",
-        "2020-01-22 02:00",
-        "2020-01-22 03:00",
-        "2020-01-22 04:00",
-        "2020-01-22 05:00",
-        "2020-01-22 06:00",
-        "2020-01-22 07:00",
-        "2020-01-22 08:00",
-        "2020-01-22 09:00",
-        "2020-01-22 10:00",]
+              data: (function (){
+                var now = new Date();
+                var res = [];
+                var len = 20;
+                while (len--) {
+                    res.unshift(now.toLocaleTimeString().replace(/^\D*/,''));
+                    now = new Date(now - 2000);
+                }
+                return res;
+            })()
         },
-        yAxis: {
-            type :'value'
-        },
+        yAxis: [
+           { type :'value',
+             name : 'b/s'
+           
+           }
+        ],
         toolbox: {
             left: 'center',
             feature: {
@@ -358,7 +419,15 @@ export default {
                     color: 'rgb(138, 197, 156)'
                 }])
             },
-            data: [30,40,50,45,66,60,53,47,50,52,60]
+            data: (function (){
+                var res = [];
+                var len = 0;
+                while (len < 20) {
+                    res.push((Math.random(7)*60 + 5).toFixed(1) - 0);
+                    len++;
+                }
+                return res;
+            })()
         },
         {
             name: 'dev_io_write_rate',
@@ -378,7 +447,15 @@ export default {
                     color: 'rgb(138, 197, 156)'
                 }])
             },
-            data: [25,34,44,39,60,50,45,40,38,40,52]
+            data: (function (){
+                var res = [];
+                var len = 0;
+                while (len < 20) {
+                    res.push((Math.random(8)*40 + 5).toFixed(1) - 0);
+                    len++;
+                }
+                return res;
+            })()
         },
         {
             name: 'dev_io_usage_rate',
@@ -398,7 +475,15 @@ export default {
                     color: 'rgb(138, 197, 156)'
                 }])
             },
-            data: [10,12,14,11,9,12,8,7,12,10,14]
+            data: (function (){
+                var res = [];
+                var len = 0;
+                while (len < 20) {
+                    res.push((Math.random(9)*30 + 5).toFixed(1) - 0);
+                    len++;
+                }
+                return res;
+            })()
         }
 
         ]
@@ -407,15 +492,117 @@ export default {
     
     
     
-    };
+    }
   },
 
   methods: {
+
+      ipChange(){
+          const _this=this
+          console.log(this.ruleForm.ip)
+          
+          var option=this.lineOption
+          var option2=this.lineOption2
+          var option3=this.lineOption3
+
+
+          app.count = 11;
+           this.interval1=setInterval(function (){
+
+               var data0 = option.series[0].data; // CPU_used_total
+               var data1 = option.series[1].data;  // CPU_used_user
+               var data2 = option.series[2].data;   // CPU_used_system
+               var data3 = option2.series[0].data;   // memory
+                var data4 = option2.series[1].data;
+                var data5 = option2.series[2].data;
+                var data6 = option3.series[0].data;  // IO
+                var data7 = option3.series[1].data;
+                var data8 = option3.series[2].data;
+                var now
+
+            // 当使用接口 将剩下部分注销，即556-592行
+                /*  axios.post('',this.ruleForm.ip).then(function(resp){
+                    if(resp.data.message=='sucess'){
+                    _this.$message('添加成功')
+                    // 后台产生现在的时间
+                    this.now=resp.data.now
+
+                    // 单个时间点的数据值
+                    this.data0.shift()
+                   this.data0.push(resp.data.CPU_used_total)
+                   this.data1.shift()
+                    this.data1.push(resp.data.CPU_used_user)
+                    this.data2.shift()
+                    this.data2.push (resp.data.CPU_used_system)
+
+                    this.data3.shift()
+                    this.data3.push(resp.data.dev_io_read_rate)
+                    this.data4.shift()
+                    this.data4.push(resp.data.dev_io_write_rate)
+                    this.data5.shift()
+                    this.data5.push(resp.data.dev_io_usage_rate)
+
+                    this.data6.shift()
+                    this.data6.push(resp.data.mem_usage_rate)
+                    this.data7.shift()
+                    this.data7.push(resp.data.swap_usage_rate)
+                    this.data8.shift()
+                    this.data8.push(resp.data.available_memory)
+                }
+
+             })  */
+
+
+                var axisData = (new Date()).toLocaleTimeString().replace(/^\D*/, ''); //现在时间点
+                
+                // CPU
+                
+                data0.shift();
+                data0.push((Math.random(1) * 55 + 40).toFixed(1) - 0);  //  随机数
+                data1.shift();
+                data1.push((Math.random(2) * 40 + 5).toFixed(1) - 0);
+                data2.shift();
+                data2.push((Math.random(3) * 40 + 4).toFixed(1) - 0);
+
+                // Memory
+                
+                data3.shift();
+                data3.push((Math.random(1) * 55 + 40).toFixed(1) - 0);
+                data4.shift();
+                data4.push((Math.random(2) * 30 + 15).toFixed(1) - 0);
+                data5.shift();
+                data5.push((Math.random(3) * 30 + 15).toFixed(1) - 0);
+
+                //IO
+                
+                data6.shift();
+                data6.push((Math.random(1) * 30 + 5).toFixed(1) - 0);
+                data7.shift();
+                data7.push((Math.random(2) * 20 + 5).toFixed(1) - 0);
+                data8.shift();
+                data8.push((Math.random(3) * 20 + 5).toFixed(1) - 0);
+
+
+                // 时间刷新
+                option.xAxis.data.shift();
+                option.xAxis.data.push(axisData);
+                option2.xAxis.data.shift();
+                option2.xAxis.data.push(axisData);
+                option3.xAxis.data.shift();
+                option3.xAxis.data.push(axisData);
+                
+                // 别注销这三行，画图语句
+                _this.lineChart.setOption(option);
+                _this.lineChart2.setOption(option2);
+                _this.lineChart3.setOption(option3);
+         }, 2100);
+      },
    
      // 查询按钮
     submitForm(){
       const _this=this;
-      
+    
+      clearInterval(this.interval1)
       
       // 实际运作时改成 axios.post，数据形式参考line.json
       console.log(this.ruleForm); //包括时间（stamp),ip,label-KPI
@@ -423,7 +610,7 @@ export default {
       /* axios.post("",this.ruleForm).then(function(resp){
         console.log(resp)
         if(resp.data.message=='success'){
-          _this.$message('添加成功')
+          _this.$message('查询成功')
           _this.lineOption.xAxis.data=resp.data.date
            _this.lineOption2.xAxis.data=resp.data.date
            _this.lineOption3.xAxis.data=resp.data.date
@@ -497,6 +684,11 @@ export default {
     this.lineChart = echarts.init(document.getElementById("linechart"));
     this.lineChart2 = echarts.init(document.getElementById("linechart2"))
     this.lineChart3 = echarts.init(document.getElementById("linechart3"))
+    
+    
+
+        
+
   }   
 }
 </script>
@@ -522,7 +714,7 @@ export default {
 #main {
   float: left;
 }
-#timeSelector {
+#Selectors {
   float: right;
 }
 #linechart {
