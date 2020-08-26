@@ -152,7 +152,22 @@ export default {
                     len++;
                 }
                 return res;
-            })()
+            })(),
+             markLine: {
+                silent: true,
+                data: [ {
+                    yAxis: '',
+                    lineStyle:{color:'red'}
+                },
+                {
+                    yAxis: '',
+                    lineStyle:{color:'purple'}
+                },{
+                    yAxis: '',
+                    lineStyle:{color:'yellow'}
+                }
+                ]
+            }
         },
         {
             name: 'CPU_used_user',
@@ -181,6 +196,7 @@ export default {
                 }
                 return res;
             })()
+
         },
         {
             name: 'CPU_used_system',
@@ -290,7 +306,22 @@ export default {
                     len++;
                 }
                 return res;
-            })()
+            })(),
+             markLine: {
+                silent: true,
+                data: [ {
+                    yAxis: '',
+                    lineStyle:{color:'red'}
+                },
+                {
+                    yAxis: '',
+                    lineStyle:{color:'purple'}
+                },{
+                    yAxis: '',
+                    lineStyle:{color:'yellow'}
+                }
+                ]
+            }
         },
         {
             name: 'swap_usage_rate',
@@ -427,7 +458,22 @@ export default {
                     len++;
                 }
                 return res;
-            })()
+            })(),
+             markLine: {
+                silent: true,
+                data: [ {
+                    yAxis: '',
+                    lineStyle:{color:'red'}
+                },
+                {
+                    yAxis: '',
+                    lineStyle:{color:'purple'}
+                },{
+                    yAxis: '',
+                    lineStyle:{color:'yellow'}
+                }
+                ]
+            }
         },
         {
             name: 'dev_io_write_rate',
@@ -504,7 +550,8 @@ export default {
           var option=this.lineOption
           var option2=this.lineOption2
           var option3=this.lineOption3
-
+          
+          
 
           app.count = 11;
            this.interval1=setInterval(function (){
@@ -520,13 +567,28 @@ export default {
                 var data8 = option3.series[2].data;
                 var now
 
-            // 当使用接口 将剩下部分注销，即556-592行
-                /*  axios.post('',this.ruleForm.ip).then(function(resp){
+            // 当使用接口 将剩下部分注销，axios.post意外的数据设置代码
+                  axios.post('',_this.ruleForm.ip).then(function(resp){
                     if(resp.data.message=='sucess'){
                     _this.$message('添加成功')
                     // 后台产生现在的时间
                     this.now=resp.data.now
-
+                    this.option.xAxis.data.shift();
+                     this.option.xAxis.data.push(this.now);
+                     this.option2.xAxis.data.shift();
+                    this.option2.xAxis.data.push(this.now);
+                    this.option3.xAxis.data.shift();
+                    this.option3.xAxis.data.push(this.now);
+                    // 警戒线数据
+                    this.option.series[0].markLine.data[0].yAxis=resp.data.line1_CPU_used_total //图1一级警告
+                    this.option.series[0].markLine.data[1].yAxis=resp.data.line2_CPU_used_total //图1二级警告
+                    this.option.series[0].markLine.data[2].yAxis=resp.data.line3_CPU_used_total //图1三级警告
+                    this.option2.series[0].markLine.data[0].yAxis=resp.data.line_dev_io_read_rate  //图2一级
+                    this.option2.series[0].markLine.data[1].yAxis=resp.data.line_dev_io_read_rate  //图2二级
+                    this.option2.series[0].markLine.data[2].yAxis=resp.data.line_dev_io_read_rate  //图2三级
+                    this.option3.series[0].markLine.data[0].yAxis=resp.data.line_mem_usage_rate  //图3一级
+                    this.option3.series[0].markLine.data[1].yAxis=resp.data.line_mem_usage_rate  //图3二级
+                    this.option3.series[0].markLine.data[2].yAxis=resp.data.line_mem_usage_rate  //图3三级
                     // 单个时间点的数据值
                     this.data0.shift()
                    this.data0.push(resp.data.CPU_used_total)
@@ -550,7 +612,7 @@ export default {
                     this.data8.push(resp.data.available_memory)
                 }
 
-             })  */
+             })  
 
 
                 var axisData = (new Date()).toLocaleTimeString().replace(/^\D*/, ''); //现在时间点
@@ -582,6 +644,19 @@ export default {
                 data8.shift();
                 data8.push((Math.random(3) * 20 + 5).toFixed(1) - 0);
 
+                // 警戒线
+                option.series[0].markLine.data[0].yAxis=90
+                option.series[0].markLine.data[1].yAxis=85
+                option.series[0].markLine.data[2].yAxis=80
+
+                option2.series[0].markLine.data[0].yAxis=90
+                option2.series[0].markLine.data[1].yAxis=85
+                option2.series[0].markLine.data[2].yAxis=80
+
+                option3.series[0].markLine.data[0].yAxis=40
+                option3.series[0].markLine.data[1].yAxis=30
+                option3.series[0].markLine.data[2].yAxis=20
+              
 
                 // 时间刷新
                 option.xAxis.data.shift();
