@@ -195,7 +195,22 @@ export default {
                     len++;
                 }
                 return res;
-            })()
+            })(),
+             markLine: {
+                silent: true,
+                data: [ {
+                    yAxis: '',
+                    lineStyle:{color:'red'}
+                },
+                {
+                    yAxis: '',
+                    lineStyle:{color:'purple'}
+                },{
+                    yAxis: '',
+                    lineStyle:{color:'yellow'}
+                }
+                ]
+            }
 
         },
         {
@@ -224,7 +239,22 @@ export default {
                     len++;
                 }
                 return res;
-            })()
+            })(),
+             markLine: {
+                silent: true,
+                data: [ {
+                    yAxis: '',
+                    lineStyle:{color:'red'}
+                },
+                {
+                    yAxis: '',
+                    lineStyle:{color:'purple'}
+                },{
+                    yAxis: '',
+                    lineStyle:{color:'yellow'}
+                }
+                ]
+            }
         }
 
         ]
@@ -349,7 +379,22 @@ export default {
                     len++;
                 }
                 return res;
-            })()
+            })(),
+             markLine: {
+                silent: true,
+                data: [ {
+                    yAxis: '',
+                    lineStyle:{color:'red'}
+                },
+                {
+                    yAxis: '',
+                    lineStyle:{color:'purple'}
+                },{
+                    yAxis: '',
+                    lineStyle:{color:'yellow'}
+                }
+                ]
+            }
         },
         {
             name: 'available_memory',
@@ -377,7 +422,22 @@ export default {
                     len++;
                 }
                 return res;
-            })()
+            })(),
+             markLine: {
+                silent: true,
+                data: [ {
+                    yAxis: '',
+                    lineStyle:{color:'red'}
+                },
+                {
+                    yAxis: '',
+                    lineStyle:{color:'purple'}
+                },{
+                    yAxis: '',
+                    lineStyle:{color:'yellow'}
+                }
+                ]
+            }
         }
 
         ]
@@ -501,7 +561,22 @@ export default {
                     len++;
                 }
                 return res;
-            })()
+            })(),
+             markLine: {
+                silent: true,
+                data: [ {
+                    yAxis: '',
+                    lineStyle:{color:'red'}
+                },
+                {
+                    yAxis: '',
+                    lineStyle:{color:'purple'}
+                },{
+                    yAxis: '',
+                    lineStyle:{color:'yellow'}
+                }
+                ]
+            }
         },
         {
             name: 'dev_io_usage_rate',
@@ -529,7 +604,22 @@ export default {
                     len++;
                 }
                 return res;
-            })()
+            })(),
+             markLine: {
+                silent: true,
+                data: [ {
+                    yAxis: '',
+                    lineStyle:{color:'red'}
+                },
+                {
+                    yAxis: '',
+                    lineStyle:{color:'purple'}
+                },{
+                    yAxis: '',
+                    lineStyle:{color:'yellow'}
+                }
+                ]
+            }
         }
 
         ]
@@ -580,16 +670,42 @@ export default {
                     this.option3.xAxis.data.shift();
                     this.option3.xAxis.data.push(this.now);
                     // 警戒线数据
+                    //图1
                     this.option.series[0].markLine.data[0].yAxis=resp.data.line1_CPU_used_total //图1一级警告
                     this.option.series[0].markLine.data[1].yAxis=resp.data.line2_CPU_used_total //图1二级警告
                     this.option.series[0].markLine.data[2].yAxis=resp.data.line3_CPU_used_total //图1三级警告
-                    this.option2.series[0].markLine.data[0].yAxis=resp.data.line_dev_io_read_rate  //图2一级
-                    this.option2.series[0].markLine.data[1].yAxis=resp.data.line_dev_io_read_rate  //图2二级
-                    this.option2.series[0].markLine.data[2].yAxis=resp.data.line_dev_io_read_rate  //图2三级
-                    this.option3.series[0].markLine.data[0].yAxis=resp.data.line_mem_usage_rate  //图3一级
-                    this.option3.series[0].markLine.data[1].yAxis=resp.data.line_mem_usage_rate  //图3二级
-                    this.option3.series[0].markLine.data[2].yAxis=resp.data.line_mem_usage_rate  //图3三级
-                    // 单个时间点的数据值
+                     this.option.series[1].markLine.data[0].yAxis=resp.data.line1_CPU_used_user  //指标2
+                    this.option.series[1].markLine.data[1].yAxis=resp.data.line2_CPU_used_user 
+                    this.option.series[1].markLine.data[2].yAxis=resp.data.line3_CPU_used_user 
+                     this.option.series[2].markLine.data[0].yAxis=resp.data.line1_CPU_used_system //指标3
+                    this.option.series[2].markLine.data[1].yAxis=resp.data.line2_CPU_used_system 
+                    this.option.series[2].markLine.data[2].yAxis=resp.data.line3_CPU_used_system 
+
+                    //图2
+                    this.option2.series[0].markLine.data[0].yAxis=resp.data.line_mem_usage_rate  //图2一级
+                    this.option2.series[0].markLine.data[1].yAxis=resp.data.line_mem_usage_rate  //图2二级
+                    this.option2.series[0].markLine.data[2].yAxis=resp.data.line_mem_usage_rate  //图2三级
+                    this.option2.series[1].markLine.data[0].yAxis=resp.data.line_mem_swqp_rate  //指标2
+                    this.option2.series[1].markLine.data[1].yAxis=resp.data.line_mem_swap_rate  
+                    this.option2.series[1].markLine.data[2].yAxis=resp.data.line_mem_swap_rate  
+                    this.option2.series[2].markLine.data[0].yAxis=resp.data.line_available_memory //指标3
+                    this.option2.series[2].markLine.data[1].yAxis=resp.data.line_available_memory 
+                    this.option2.series[2].markLine.data[2].yAxis=resp.data.line_available_memory
+
+
+                    //图3
+                    this.option3.series[0].markLine.data[0].yAxis=resp.data.line_dev_io_read_rate  //图3一级
+                    this.option3.series[0].markLine.data[1].yAxis=resp.data.line_dev_io_read_rate  //图3二级
+                    this.option3.series[0].markLine.data[2].yAxis=resp.data.line_dev_io_read_rate  //图3三级
+                    this.option3.series[1].markLine.data[0].yAxis=resp.data.line_dev_io_write_rate  //指标2
+                    this.option3.series[1].markLine.data[1].yAxis=resp.data.line_dev_io_write_rate                      
+                    this.option3.series[1].markLine.data[2].yAxis=resp.data.line_dev_io_write_rate  
+                     this.option3.series[2].markLine.data[0].yAxis=resp.data.line_dev_io_usage_rate  //指标3
+                    this.option3.series[2].markLine.data[1].yAxis=resp.data.line_dev_io_usage_rate  
+                    this.option3.series[2].markLine.data[2].yAxis=resp.data.line_dev_io_usage_rate  
+
+                    
+                    // 单个时间点的数据值 这里好像错了
                     this.data0.shift()
                    this.data0.push(resp.data.CPU_used_total)
                    this.data1.shift()
@@ -648,10 +764,22 @@ export default {
                 option.series[0].markLine.data[0].yAxis=90
                 option.series[0].markLine.data[1].yAxis=85
                 option.series[0].markLine.data[2].yAxis=80
+                option.series[1].markLine.data[0].yAxis=90
+                option.series[1].markLine.data[1].yAxis=85
+                option.series[1].markLine.data[2].yAxis=80
+                option.series[2].markLine.data[0].yAxis=90
+                option.series[2].markLine.data[1].yAxis=85
+                option.series[2].markLine.data[2].yAxis=80
 
                 option2.series[0].markLine.data[0].yAxis=90
                 option2.series[0].markLine.data[1].yAxis=85
                 option2.series[0].markLine.data[2].yAxis=80
+                option2.series[1].markLine.data[0].yAxis=92
+                option2.series[1].markLine.data[1].yAxis=87
+                option2.series[1].markLine.data[2].yAxis=82
+                option2.series[2].markLine.data[0].yAxis=88
+                option2.series[2].markLine.data[1].yAxis=83
+                option2.series[2].markLine.data[2].yAxis=81
 
                 option3.series[0].markLine.data[0].yAxis=40
                 option3.series[0].markLine.data[1].yAxis=30
